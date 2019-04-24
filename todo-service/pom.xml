@@ -12,7 +12,7 @@
     <artifactId>todo-service</artifactId>
     <version>1.0</version>
     <name>todo-service</name>
-    <description>Demo service for experiments</description>
+    <description>Demo REST service for experiments</description>
 
     <properties>
         <java.version>1.8</java.version>
