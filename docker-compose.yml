@@ -3,7 +3,7 @@ services:
   todo-service:
     container_name: todo-service
     build: 
-      context: todo-service/
+      context: services/todo-service/
     image: smuralee/todo-service:latest
     ports: 
       - 9000:8080
