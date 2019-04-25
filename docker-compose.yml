@@ -1,9 +1,23 @@
 version: '2'
 services: 
-  todo-service:
-    container_name: todo-service
+  product-orders-api:
+    container_name: product-orders-api
     build: 
-      context: services/todo-service/
-    image: smuralee/todo-service:latest
+      context: api/product-orders-api
+    image: smuralee/product-orders-api:latest
     ports: 
-      - 9000:8080
+      - 9001:9001
+  todos-api:
+    container_name: todos-api
+    build:
+      context: api/todos-api
+    image: smuralee/todos-api:latest
+    ports:
+      - 9002:9002
+  users-api:
+    container_name: users-api
+    build:
+      context: api/users-api
+    image: smuralee/users-api:latest
+    ports:
+      - 9003:9003
