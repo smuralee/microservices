@@ -1,8 +1,8 @@
 package com.smuralee.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smuralee.entity.ProductOrder;
-import com.smuralee.repository.ProductOrderRepository;
+import com.smuralee.entity.Todo;
+import com.smuralee.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,16 +28,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest
-class ProductOrderControllerTest {
+class TodoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductOrderRepository repository;
+    private TodoRepository repository;
 
     @Spy
-    private List<ProductOrder> productOrderList;
+    private List<Todo> todoList;
 
     @Spy
     private ObjectMapper mapper = new ObjectMapper();
@@ -45,11 +45,11 @@ class ProductOrderControllerTest {
     @BeforeEach
     void setUp() {
 
-        productOrderList = Arrays.asList(
-                new ProductOrder(1L, "Carpet", "£12.00"),
-                new ProductOrder(2L, "Lamp", "£11.50"),
-                new ProductOrder(3L, "Pillow", "£1.50"),
-                new ProductOrder(4L, "Table", "£24.62")
+        todoList = Arrays.asList(
+                new Todo(1L, "Get milk", true),
+                new Todo(2L, "Deposit rent", false),
+                new Todo(3L, "Buy vegetables", false),
+                new Todo(4L, "Book a taxi", true)
         );
 
     }
@@ -57,17 +57,17 @@ class ProductOrderControllerTest {
     @Test
     void getAll() throws Exception {
 
-        when(repository.findAll()).thenReturn(productOrderList);
+        when(repository.findAll()).thenReturn(todoList);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/product-orders")
+                MockMvcRequestBuilders.get("/todos")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isOk())
                 .andExpect(
                         content()
-                                .json(this.mapper.writeValueAsString(productOrderList))
+                                .json(this.mapper.writeValueAsString(todoList))
                 );
 
         // Verify the method is called just once
@@ -79,21 +79,21 @@ class ProductOrderControllerTest {
     @ValueSource(longs = {1, 2, 3, 4})
     void getById(final Long selectedId) throws Exception {
 
-        Optional<ProductOrder> productOrder = productOrderList.stream()
-                .filter(order -> order.getId().equals(selectedId))
+        Optional<Todo> todo = todoList.stream()
+                .filter(item -> item.getId().equals(selectedId))
                 .findFirst();
 
-        when(repository.findById(Mockito.anyLong())).thenReturn(productOrder);
+        when(repository.findById(Mockito.anyLong())).thenReturn(todo);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.get("/todos/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isOk())
                 .andExpect(
                         content()
-                                .json(this.mapper.writeValueAsString(productOrder.get()))
+                                .json(this.mapper.writeValueAsString(todo.get()))
                 );
 
         // Verify the method is called just once
@@ -102,23 +102,23 @@ class ProductOrderControllerTest {
     }
 
     @Test
-    void addProductOrder() throws Exception {
+    void addTodo() throws Exception {
 
         // Payload for the REST endpoint
-        ProductOrder payload = new ProductOrder();
-        payload.setCost("£23.45");
-        payload.setDescription("Bicycle");
+        Todo payload = new Todo();
+        payload.setDescription("Buy a cycle");
+        payload.setCompleted(false);
 
         // Response for the REST endpoint
-        ProductOrder response = new ProductOrder();
+        Todo response = new Todo();
         response.setId(1L);
-        response.setCost("£23.45");
-        response.setDescription("Bicycle");
+        payload.setDescription("Buy a cycle");
+        payload.setCompleted(false);
 
-        when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
+        when(repository.save(Mockito.any(Todo.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.post("/product-orders")
+                MockMvcRequestBuilders.post("/todos")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -130,35 +130,35 @@ class ProductOrderControllerTest {
                 );
 
         // Verify the method is called just once
-        verify(repository, times(1)).save(Mockito.any(ProductOrder.class));
+        verify(repository, times(1)).save(Mockito.any(Todo.class));
 
     }
 
     @ParameterizedTest
     @ValueSource(longs = {1, 2, 3, 4})
-    void updateProductOrder(final Long selectedId) throws Exception {
+    void updateTodo(final Long selectedId) throws Exception {
 
-        Optional<ProductOrder> productOrder = productOrderList.stream()
-                .filter(order -> order.getId().equals(selectedId))
+        Optional<Todo> todo = todoList.stream()
+                .filter(item -> item.getId().equals(selectedId))
                 .findFirst();
 
-        when(repository.findById(Mockito.anyLong())).thenReturn(productOrder);
+        when(repository.findById(Mockito.anyLong())).thenReturn(todo);
 
         // Payload for the REST endpoint
-        ProductOrder payload = new ProductOrder();
-        payload.setCost("£20.45");
-        payload.setDescription("Bicycle Updated");
+        Todo payload = new Todo();
+        payload.setDescription("Buy a cycle updated");
+        payload.setCompleted(false);
 
         // Response for the REST endpoint
-        ProductOrder response = new ProductOrder();
-        response.setId(selectedId);
-        response.setCost("£20.45");
-        response.setDescription("Bicycle Updated");
+        Todo response = new Todo();
+        response.setId(1L);
+        payload.setDescription("Buy a cycle updated");
+        payload.setCompleted(false);
 
-        when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
+        when(repository.save(Mockito.any(Todo.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.put("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.put("/todos/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -170,7 +170,7 @@ class ProductOrderControllerTest {
                 );
 
         // Verify the method is called just once
-        verify(repository, times(1)).save(Mockito.any(ProductOrder.class));
+        verify(repository, times(1)).save(Mockito.any(Todo.class));
         verify(repository, times(1)).findById(Mockito.anyLong());
     }
 
@@ -179,7 +179,7 @@ class ProductOrderControllerTest {
     void deleteById(final Long selectedId) throws Exception {
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.delete("/todos/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
