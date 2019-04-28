@@ -3,3 +3,9 @@ spring:
     name: todos
 server:
   port: 9002
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.smuralee: DEBUG
+    org.hibernate: ERROR
