@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.smuralee.entity.Todo;
+import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +27,28 @@ public class TodoController {
     @GetMapping("/{id}")
     public Todo getById(final @PathVariable Long id) {
         log.info("Getting the todos by id");
-        Optional<Todo> Todo = this.repository.findById(id);
-        return Todo.get();
+        Optional<Todo> todo = this.repository.findById(id);
+        return todo.orElseThrow(DataNotFoundException::new);
     }
 
     @PostMapping
-    public Todo addTodo(final @RequestBody Todo Todo) {
+    public Todo addTodo(final @RequestBody Todo todo) {
         log.info("Saving the new todo");
-        return this.repository.save(Todo);
+        return this.repository.save(todo);
     }
 
     @PutMapping("/{id}")
-    public Todo updateTodo(final @RequestBody Todo Todo, final @PathVariable Long id) {
+    public Todo updateTodo(final @RequestBody Todo todo, final @PathVariable Long id) {
         log.info("Fetching the todo by id");
         Optional<Todo> fetchedTodo = this.repository.findById(id);
-        Todo updatedTodo = null;
+
+        log.info("Updating the todo identified by the id");
         if (fetchedTodo.isPresent()) {
-            Todo.setId(id);
-            updatedTodo = this.repository.save(Todo);
+            todo.setId(id);
+            return this.repository.save(todo);
+        } else {
+            throw new DataNotFoundException();
         }
-        log.info("Updated the todo identified by the id");
-        return updatedTodo;
     }
 
     @DeleteMapping("{id}")

@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.smuralee.entity.User;
+import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +27,28 @@ public class UserController {
     @GetMapping("/{id}")
     public User getById(final @PathVariable Long id) {
         log.info("Getting the users by id");
-        Optional<User> User = this.repository.findById(id);
-        return User.get();
+        Optional<User> user = this.repository.findById(id);
+        return user.orElseThrow(DataNotFoundException::new);
     }
 
     @PostMapping
-    public User addUser(final @RequestBody User User) {
+    public User addUser(final @RequestBody User user) {
         log.info("Saving the new user");
-        return this.repository.save(User);
+        return this.repository.save(user);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(final @RequestBody User User, final @PathVariable Long id) {
+    public User updateUser(final @RequestBody User user, final @PathVariable Long id) {
         log.info("Fetching the user by id");
         Optional<User> fetchedUser = this.repository.findById(id);
-        User updatedUser = null;
+
+        log.info("Updating the user identified by the id");
         if (fetchedUser.isPresent()) {
-            User.setId(id);
-            updatedUser = this.repository.save(User);
+            user.setId(id);
+            return this.repository.save(user);
+        } else {
+            throw new DataNotFoundException();
         }
-        log.info("Updated the user identified by the id");
-        return updatedUser;
     }
 
     @DeleteMapping("{id}")
