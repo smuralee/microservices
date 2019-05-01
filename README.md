@@ -15,4 +15,4 @@
   - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
 
 # Docker configuration
-* [Docker compose](./apis/docker-compose.yml)
+* [Docker compose](./docker-compose.yml)
