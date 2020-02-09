@@ -1,19 +1,5 @@
-version: '2'
-services: 
-  product-orders-api:
-    container_name: product-orders-api
-    build: 
-      context: api/product-orders-api
-    image: smuralee/product-orders-api:latest
-    ports: 
-      - 9001:9001
-  todos-api:
-    container_name: todos-api
-    build:
-      context: api/todos-api
-    image: smuralee/todos-api:latest
-    ports:
-      - 9002:9002
+version: '3'
+services:
   users-api:
     container_name: users-api
     build:
@@ -21,3 +7,21 @@ services:
     image: smuralee/users-api:latest
     ports:
       - 9003:9003
+    depends_on:
+      - todos-api
+      - product-orders-api
+  todos-api:
+    container_name: todos-api
+    build:
+      context: api/todos-api
+    image: smuralee/todos-api:latest
+    ports:
+      - 9002:9002
+  product-orders-api:
+    container_name: product-orders-api
+    build:
+      context: api/product-orders-api
+    image: smuralee/product-orders-api:latest
+    ports:
+      - 9001:9001
+

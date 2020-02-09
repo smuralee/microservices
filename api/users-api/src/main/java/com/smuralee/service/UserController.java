@@ -1,12 +1,23 @@
 package com.smuralee.service;
 
+import com.smuralee.entity.InstanceInfo;
 import com.smuralee.entity.User;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,13 +26,51 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    private final RestTemplate restTemplate;
+
+    public UserController(UserRepository repository, RestTemplate restTemplate) {
+        this.repository = repository;
+        this.restTemplate = restTemplate;
+    }
 
     @GetMapping
     public List<User> getAll() {
         log.info("Getting all the users");
         return this.repository.findAll();
+    }
+
+    @GetMapping("/info")
+    public InstanceInfo getInfo() throws IOException {
+        log.info("Fetching the instance info");
+        InstanceInfo instanceInfo = new InstanceInfo();
+        InetAddress localhost = InetAddress.getLocalHost();
+
+        instanceInfo.setHostIpAddress(localhost.getHostAddress());
+        instanceInfo.setHostname(localhost.getHostName());
+
+        URL url = new URL("http://bot.whatismyipaddress.com");
+        BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
+        instanceInfo.setPublicIpAddress(sc.readLine().trim());
+
+        return instanceInfo;
+    }
+
+    @GetMapping("/todos")
+    public String getTodos() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return this.restTemplate.exchange("http://todos-api:9002/todos", HttpMethod.GET, entity, String.class).getBody();
+    }
+
+    @GetMapping("/product-orders")
+    public String getProductOrders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return this.restTemplate.exchange("http://product-orders-api:9001/product-orders", HttpMethod.GET, entity, String.class).getBody();
     }
 
     @GetMapping("/{id}")
