@@ -2,17 +2,27 @@
 
 # APIs
 * **Product Orders**
+  - Port: `9001`
   - Endpoint : `/product-orders`
-  - Port : `9001`
-  - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
-* **Todos** 
+    - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
+  - Endpoint: `/product-orders/info`
+    - Returns the `hostname`, `host address` and `public IP address`
+* **Todos**
+  - Port: `9002`
   - Endpoint : `/todos`
-  - Port : `9002`
-  - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
-* **Users** 
+    - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
+  - Endpoint: `/todos/info`
+    - Returns the `hostname`, `host address` and `public IP address`
+* **Users**
+  - Port: `9003`
   - Endpoint : `/users`
-  - Port : `9003`
-  - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
+    - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
+  - Endpoint: `/users/info`
+    - Returns the `hostname`, `host address` and `public IP address`
+  - Endpoint: `/users/todos`
+    - Invokes the `/todos` REST API (inter-service communication)
+  - Endpoint: `/users/product-orders`
+    - Invokes the `/product-orders` REST API (inter-service communication)
 
 # Docker configuration
 * [Docker compose](./docker-compose.yml)
