@@ -6,22 +6,27 @@ services:
       context: api/users-api
     image: smuralee/users-api:latest
     ports:
-      - 9003:9003
+      - 9003:8080
     depends_on:
       - todos-api
       - product-orders-api
+    environment:
+      - PRODUCT_ORDERS_API_HOSTNAME=product-orders-api
+      - PRODUCT_ORDERS_API_PORT=8080
+      - TODOS_API_HOSTNAME=todos-api
+      - TODOS_API_PORT=8080
   todos-api:
     container_name: todos-api
     build:
       context: api/todos-api
     image: smuralee/todos-api:latest
     ports:
-      - 9002:9002
+      - 9002:8080
   product-orders-api:
     container_name: product-orders-api
     build:
       context: api/product-orders-api
     image: smuralee/product-orders-api:latest
     ports:
-      - 9001:9001
+      - 9001:8080
 

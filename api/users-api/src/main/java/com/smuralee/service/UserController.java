@@ -5,6 +5,7 @@ import com.smuralee.entity.User;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,9 +31,12 @@ public class UserController {
 
     private final RestTemplate restTemplate;
 
-    public UserController(UserRepository repository, RestTemplate restTemplate) {
+    private final Environment environment;
+
+    public UserController(UserRepository repository, RestTemplate restTemplate, Environment environment) {
         this.repository = repository;
         this.restTemplate = restTemplate;
+        this.environment = environment;
     }
 
     @GetMapping
@@ -57,20 +61,32 @@ public class UserController {
         return instanceInfo;
     }
 
-    @GetMapping("/todos")
-    public String getTodos() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        return this.restTemplate.exchange("http://todos-api:9002/todos", HttpMethod.GET, entity, String.class).getBody();
-    }
-
     @GetMapping("/product-orders")
     public String getProductOrders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        return this.restTemplate.exchange("http://product-orders-api:9001/product-orders", HttpMethod.GET, entity, String.class).getBody();
+
+        final String hostname = environment.getProperty("PRODUCT_ORDERS_API_HOSTNAME");
+        final String port = environment.getProperty("PRODUCT_ORDERS_API_PORT");
+
+        final String endpoint = "http://" + hostname + ":" + port + "/product-orders";
+
+        return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
+    }
+
+    @GetMapping("/todos")
+    public String getTodos() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        final String hostname = environment.getProperty("TODOS_API_HOSTNAME");
+        final String port = environment.getProperty("TODOS_API_PORT");
+
+        final String endpoint = "http://" + hostname + ":" + port + "/todos";
+
+        return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
     }
 
     @GetMapping("/{id}")

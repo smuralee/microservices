@@ -2,7 +2,7 @@ spring:
   application:
     name: users
 server:
-  port: 9003
+  port: 8080
 logging:
   level:
     root: ERROR

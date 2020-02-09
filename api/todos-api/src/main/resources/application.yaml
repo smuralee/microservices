@@ -2,7 +2,7 @@ spring:
   application:
     name: todos
 server:
-  port: 9002
+  port: 8080
 logging:
   level:
     root: ERROR
