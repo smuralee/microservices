@@ -1,5 +1,6 @@
 package com.smuralee;
 
+import com.smuralee.config.AppConfig;
 import com.smuralee.service.TodoController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +17,12 @@ class TodosApiApplicationTest {
     @Autowired
     private TodoController controller;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Test
     void contextLoads() {
         assertThat(controller).isNotNull();
+        assertThat(appConfig).isNotNull();
     }
 }

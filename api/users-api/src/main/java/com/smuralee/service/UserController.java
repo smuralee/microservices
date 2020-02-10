@@ -1,5 +1,6 @@
 package com.smuralee.service;
 
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.InstanceInfo;
 import com.smuralee.entity.User;
 import com.smuralee.errors.DataNotFoundException;
@@ -33,16 +34,25 @@ public class UserController {
 
     private final Environment environment;
 
-    public UserController(UserRepository repository, RestTemplate restTemplate, Environment environment) {
+    private final AppConfig appConfig;
+
+    public UserController(UserRepository repository, RestTemplate restTemplate, Environment environment, AppConfig appConfig) {
         this.repository = repository;
         this.restTemplate = restTemplate;
         this.environment = environment;
+        this.appConfig = appConfig;
     }
 
     @GetMapping
     public List<User> getAll() {
         log.info("Getting all the users");
         return this.repository.findAll();
+    }
+
+    @GetMapping("/config")
+    public AppConfig getConfigInfo() {
+        log.info("Fetching the config info");
+        return this.appConfig;
     }
 
     @GetMapping("/info")
@@ -61,16 +71,17 @@ public class UserController {
         return instanceInfo;
     }
 
-    @GetMapping("/product-orders")
+    @GetMapping("/orders")
     public String getProductOrders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        final String hostname = environment.getProperty("PRODUCT_ORDERS_API_HOSTNAME");
-        final String port = environment.getProperty("PRODUCT_ORDERS_API_PORT");
+        final String hostname = environment.getProperty("ORDERS_HOSTNAME");
+        final String port = environment.getProperty("ORDERS_PORT");
 
-        final String endpoint = "http://" + hostname + ":" + port + "/product-orders";
+        final String endpoint = "http://" + hostname + ":" + port + "/orders";
+        log.info("Connecting to : "+endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
     }
@@ -81,10 +92,11 @@ public class UserController {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        final String hostname = environment.getProperty("TODOS_API_HOSTNAME");
-        final String port = environment.getProperty("TODOS_API_PORT");
+        final String hostname = environment.getProperty("TODOS_HOSTNAME");
+        final String port = environment.getProperty("TODOS_PORT");
 
         final String endpoint = "http://" + hostname + ":" + port + "/todos";
+        log.info("Connecting to : "+endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
     }

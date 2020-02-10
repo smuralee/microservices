@@ -9,3 +9,7 @@ logging:
     org.springframework.web: ERROR
     com.smuralee: DEBUG
     org.hibernate: ERROR
+
+app:
+  features:
+    secretManagement: false

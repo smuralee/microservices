@@ -1,11 +1,11 @@
 package com.smuralee.service;
 
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.InstanceInfo;
 import com.smuralee.entity.Todo;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -21,13 +21,25 @@ import java.util.Optional;
 @RequestMapping("/todos")
 public class TodoController {
 
-    @Autowired
-    private TodoRepository repository;
+    private final TodoRepository repository;
+
+    private final AppConfig appConfig;
+
+    public TodoController(TodoRepository repository, AppConfig appConfig) {
+        this.repository = repository;
+        this.appConfig = appConfig;
+    }
 
     @GetMapping
     public List<Todo> getAll() {
         log.info("Getting all the todos");
         return this.repository.findAll();
+    }
+
+    @GetMapping("/config")
+    public AppConfig getConfigInfo() {
+        log.info("Fetching the config info");
+        return this.appConfig;
     }
 
     @GetMapping("/info")

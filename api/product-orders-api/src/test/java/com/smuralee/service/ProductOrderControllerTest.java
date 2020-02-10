@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.ProductOrder;
 import com.smuralee.repository.ProductOrderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ class ProductOrderControllerTest {
     @MockBean
     private ProductOrderRepository repository;
 
+    @MockBean
+    private AppConfig appConfig;
+
     @Spy
     private List<ProductOrder> productOrderList;
 
@@ -52,6 +56,8 @@ class ProductOrderControllerTest {
                 new ProductOrder(4L, "Table", "£24.62")
         );
 
+        when(appConfig.isSecretManagement()).thenReturn(false);
+
     }
 
     @Test
@@ -60,7 +66,7 @@ class ProductOrderControllerTest {
         when(repository.findAll()).thenReturn(productOrderList);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/product-orders")
+                MockMvcRequestBuilders.get("/orders")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -86,7 +92,7 @@ class ProductOrderControllerTest {
         when(repository.findById(Mockito.anyLong())).thenReturn(productOrder);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.get("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -118,7 +124,7 @@ class ProductOrderControllerTest {
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.post("/product-orders")
+                MockMvcRequestBuilders.post("/orders")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -158,7 +164,7 @@ class ProductOrderControllerTest {
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.put("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.put("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -179,7 +185,7 @@ class ProductOrderControllerTest {
     void deleteById(final Long selectedId) throws Exception {
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/product-orders/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.delete("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )

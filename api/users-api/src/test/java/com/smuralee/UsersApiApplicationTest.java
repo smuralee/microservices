@@ -1,5 +1,6 @@
 package com.smuralee;
 
+import com.smuralee.config.AppConfig;
 import com.smuralee.service.UserController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +17,13 @@ class UsersApiApplicationTest {
     @Autowired
     private UserController controller;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Test
     void contextLoads() {
         assertThat(controller).isNotNull();
+        assertThat(appConfig).isNotNull();
     }
 
 }

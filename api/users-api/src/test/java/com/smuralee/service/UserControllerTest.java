@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.User;
 import com.smuralee.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ class UserControllerTest {
     @MockBean
     private UserRepository repository;
 
+    @MockBean
+    private AppConfig appConfig;
+
     @Spy
     private List<User> userList;
 
@@ -51,6 +55,8 @@ class UserControllerTest {
                 new User(3L, "Raj", 36),
                 new User(4L, "Steve", 41)
         );
+
+        when(appConfig.isSecretManagement()).thenReturn(false);
 
     }
 

@@ -11,10 +11,10 @@ services:
       - todos-api
       - product-orders-api
     environment:
-      - PRODUCT_ORDERS_API_HOSTNAME=product-orders-api
-      - PRODUCT_ORDERS_API_PORT=8080
-      - TODOS_API_HOSTNAME=todos-api
-      - TODOS_API_PORT=8080
+      - ORDERS_HOSTNAME=product-orders-api
+      - ORDERS_PORT=8080
+      - TODOS_HOSTNAME=todos-api
+      - TODOS_PORT=8080
   todos-api:
     container_name: todos-api
     build:

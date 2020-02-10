@@ -1,5 +1,6 @@
 package com.smuralee.service;
 
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.InstanceInfo;
 import com.smuralee.entity.ProductOrder;
 import com.smuralee.errors.DataNotFoundException;
@@ -17,13 +18,15 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/product-orders")
+@RequestMapping("/orders")
 public class ProductOrderController {
 
     private final ProductOrderRepository repository;
+    private final AppConfig appConfig;
 
-    public ProductOrderController(ProductOrderRepository repository) {
+    public ProductOrderController(ProductOrderRepository repository, AppConfig appConfig) {
         this.repository = repository;
+        this.appConfig = appConfig;
     }
 
     @GetMapping
@@ -32,8 +35,14 @@ public class ProductOrderController {
         return this.repository.findAll();
     }
 
+    @GetMapping("/config")
+    public AppConfig getConfigInfo() {
+        log.info("Fetching the config info");
+        return this.appConfig;
+    }
+
     @GetMapping("/info")
-    public InstanceInfo getInfo() throws IOException {
+    public InstanceInfo getInstanceInfo() throws IOException {
         log.info("Fetching the instance info");
         InstanceInfo instanceInfo = new InstanceInfo();
         InetAddress localhost = InetAddress.getLocalHost();

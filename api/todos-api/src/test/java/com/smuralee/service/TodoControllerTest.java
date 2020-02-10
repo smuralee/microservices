@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smuralee.config.AppConfig;
 import com.smuralee.entity.Todo;
 import com.smuralee.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ class TodoControllerTest {
     @MockBean
     private TodoRepository repository;
 
+    @MockBean
+    private AppConfig appConfig;
+
     @Spy
     private List<Todo> todoList;
 
@@ -51,6 +55,8 @@ class TodoControllerTest {
                 new Todo(3L, "Buy vegetables", false),
                 new Todo(4L, "Book a taxi", true)
         );
+
+        when(appConfig.isSecretManagement()).thenReturn(false);
 
     }
 
