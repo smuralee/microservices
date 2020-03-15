@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@RequestMapping("/")
 public class UserController {
 
     private final UserRepository repository;
@@ -72,7 +73,7 @@ public class UserController {
         final String hostname = environment.getProperty("ORDERS_HOSTNAME");
         final String port = environment.getProperty("ORDERS_PORT");
 
-        final String endpoint = "http://" + hostname + ":" + port + "/orders";
+        final String endpoint = "http://" + hostname + ":" + port + "/";
         log.info("Connecting to : " + endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
@@ -87,7 +88,7 @@ public class UserController {
         final String hostname = environment.getProperty("TODOS_HOSTNAME");
         final String port = environment.getProperty("TODOS_PORT");
 
-        final String endpoint = "http://" + hostname + ":" + port + "/todos";
+        final String endpoint = "http://" + hostname + ":" + port + "/";
         log.info("Connecting to : " + endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();

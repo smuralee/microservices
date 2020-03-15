@@ -3,8 +3,6 @@ spring:
     name: orders
 server:
   port: 0
-  servlet:
-    context-path: /orders
 logging:
   level:
     root: ERROR
