@@ -13,6 +13,5 @@ public class InstanceInfo implements Serializable {
 
     private String hostname;
     private String hostIpAddress;
-    private String publicIpAddress;
 
 }

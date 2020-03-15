@@ -8,17 +8,13 @@ import com.smuralee.repository.ProductOrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/orders")
 public class ProductOrderController {
 
     private final ProductOrderRepository repository;
@@ -49,10 +45,6 @@ public class ProductOrderController {
 
         instanceInfo.setHostIpAddress(localhost.getHostAddress());
         instanceInfo.setHostname(localhost.getHostName());
-
-        URL url = new URL("http://bot.whatismyipaddress.com");
-        BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
-        instanceInfo.setPublicIpAddress(sc.readLine().trim());
 
         return instanceInfo;
     }

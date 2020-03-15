@@ -14,18 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     private final UserRepository repository;
@@ -64,10 +60,6 @@ public class UserController {
         instanceInfo.setHostIpAddress(localhost.getHostAddress());
         instanceInfo.setHostname(localhost.getHostName());
 
-        URL url = new URL("http://bot.whatismyipaddress.com");
-        BufferedReader sc = new BufferedReader(new InputStreamReader(url.openStream()));
-        instanceInfo.setPublicIpAddress(sc.readLine().trim());
-
         return instanceInfo;
     }
 
@@ -81,7 +73,7 @@ public class UserController {
         final String port = environment.getProperty("ORDERS_PORT");
 
         final String endpoint = "http://" + hostname + ":" + port + "/orders";
-        log.info("Connecting to : "+endpoint);
+        log.info("Connecting to : " + endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
     }
@@ -96,7 +88,7 @@ public class UserController {
         final String port = environment.getProperty("TODOS_PORT");
 
         final String endpoint = "http://" + hostname + ":" + port + "/todos";
-        log.info("Connecting to : "+endpoint);
+        log.info("Connecting to : " + endpoint);
 
         return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
     }

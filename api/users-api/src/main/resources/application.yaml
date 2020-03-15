@@ -3,6 +3,8 @@ spring:
     name: users
 server:
   port: 0
+  servlet:
+    context-path: /users
 logging:
   level:
     root: ERROR
