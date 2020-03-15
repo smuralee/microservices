@@ -66,7 +66,7 @@ class UserControllerTest {
         when(repository.findAll()).thenReturn(userList);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/users")
+                MockMvcRequestBuilders.get("/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -91,7 +91,7 @@ class UserControllerTest {
         when(repository.findById(Mockito.anyLong())).thenReturn(user);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/users/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.get("/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -123,7 +123,7 @@ class UserControllerTest {
         when(repository.save(Mockito.any(User.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.post("/users")
+                MockMvcRequestBuilders.post("/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -162,7 +162,7 @@ class UserControllerTest {
         when(repository.save(Mockito.any(User.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.put("/users/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.put("/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -183,7 +183,7 @@ class UserControllerTest {
     void deleteById(final Long selectedId) throws Exception {
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/users/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.delete("/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
