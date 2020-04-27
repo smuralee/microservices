@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.smuralee</groupId>
-    <artifactId>product-orders-api</artifactId>
+    <artifactId>orders-api</artifactId>
     <version>1.0</version>
-    <name>product-orders-api</name>
+    <name>orders-api</name>
     <description>Demo REST service for experiments</description>
 
     <properties>

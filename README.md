@@ -1,7 +1,7 @@
 # Microservices
 
 # APIs
-* **Product Orders**
+* **Orders**
   - Endpoint : `/`
     - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
   - Endpoint: `/info`

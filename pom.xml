@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api/product-orders-api</module>
+        <module>api/orders-api</module>
         <module>api/todos-api</module>
         <module>api/users-api</module>
     </modules>
