@@ -3,8 +3,8 @@ const os = require("os");
 
 console.log("Ping server starting...");
 
-var handler = function(request, response) {
-    var remoteAddr = request.connection.remoteAddress;
+const handler = function (request, response) {
+    let remoteAddr = request.connection.remoteAddress;
     console.log("Received request from " + remoteAddr);
     response.writeHead(200);
     response.end(
