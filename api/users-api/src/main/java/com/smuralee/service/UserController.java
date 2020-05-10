@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserRepository repository;

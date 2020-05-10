@@ -3,8 +3,6 @@ spring:
     name: todos
 server:
   port: 0
-  servlet:
-    context-path: /todos
 logging:
   level:
     root: ERROR

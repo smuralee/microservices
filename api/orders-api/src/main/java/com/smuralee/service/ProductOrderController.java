@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/")
+@RequestMapping("/orders")
 public class ProductOrderController {
 
     private final ProductOrderRepository repository;

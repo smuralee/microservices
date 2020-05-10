@@ -66,7 +66,7 @@ class ProductOrderControllerTest {
         when(repository.findAll()).thenReturn(productOrderList);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/")
+                MockMvcRequestBuilders.get("/orders/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -92,7 +92,7 @@ class ProductOrderControllerTest {
         when(repository.findById(Mockito.anyLong())).thenReturn(productOrder);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get("/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.get("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
@@ -124,7 +124,7 @@ class ProductOrderControllerTest {
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.post("/")
+                MockMvcRequestBuilders.post("/orders/")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -164,7 +164,7 @@ class ProductOrderControllerTest {
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.put("/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.put("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
                         .content(mapper.writeValueAsString(payload))
@@ -185,7 +185,7 @@ class ProductOrderControllerTest {
     void deleteById(final Long selectedId) throws Exception {
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete("/".concat(String.valueOf(selectedId)))
+                MockMvcRequestBuilders.delete("/orders/".concat(String.valueOf(selectedId)))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .accept(MediaType.APPLICATION_JSON_UTF8)
         )
