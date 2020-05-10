@@ -2,27 +2,27 @@
 
 # APIs
 * **Orders**
-  - Endpoint : `/`
+  - Endpoint : `/orders`
     - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
   - Endpoint: `/info`
     - Returns the `hostname`and `host address`
   - Endpoint: `/config`
       - Returns the custom configurations in YAML
 * **Todos**
-  - Endpoint : `/`
+  - Endpoint : `/todos`
     - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
   - Endpoint: `/info`
     - Returns the `hostname` and `host address`
   - Endpoint: `/config`
     - Returns the custom configurations in YAML
 * **Users**
-  - Endpoint : `/`
+  - Endpoint : `/users`
     - Supported operations : **GET**, **POST**, **PUT**, **DELETE**
   - Endpoint: `/info`
     - Returns the `hostname` and `host address`
-  - Endpoint: `/todos`
+  - Endpoint: `/users/todos`
     - Invokes the GET operation on `todos` REST API (inter-service communication)
-  - Endpoint: `/orders`
+  - Endpoint: `/users/orders`
     - Invokes the GET operation on `orders` REST API (inter-service communication)
   - Endpoint: `/config`
     - Returns the custom configurations in YAML
