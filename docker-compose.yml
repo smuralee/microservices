@@ -1,5 +1,12 @@
 version: '3'
 services:
+  ping:
+    container_name: ping
+    build:
+      context: api/ping
+    image: smuralee/ping:latest
+    ports:
+      - 8080:8080
   users-api:
     container_name: users-api
     build:
