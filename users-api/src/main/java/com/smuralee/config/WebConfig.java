@@ -11,6 +11,6 @@ public class WebConfig {
 
     @Bean
     public Filter TracingFilter() {
-        return new AWSXRayServletFilter("users");
+        return new AWSXRayServletFilter("users-api");
     }
 }

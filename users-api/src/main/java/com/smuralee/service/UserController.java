@@ -1,5 +1,6 @@
 package com.smuralee.service;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.smuralee.config.AppConfig;
 import com.smuralee.domain.Order;
 import com.smuralee.domain.User;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@XRayEnabled
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -53,7 +55,7 @@ public class UserController {
 
     @GetMapping("/{id}/orders")
     public User getUserWithOrders(final @PathVariable Long id) {
-        StringBuilder endpoint = new StringBuilder("http://svc-orders:8001/orders/user/").append(id);
+        StringBuilder endpoint = new StringBuilder("http://orders-api:8080/orders/user/").append(id);
         log.info("Connecting to : " + endpoint.toString());
 
         ResponseEntity<List<Order>> rateResponse =

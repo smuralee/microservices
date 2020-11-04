@@ -11,6 +11,6 @@ public class WebConfig {
 
     @Bean
     public Filter TracingFilter() {
-        return new AWSXRayServletFilter("orders");
+        return new AWSXRayServletFilter("orders-api");
     }
 }

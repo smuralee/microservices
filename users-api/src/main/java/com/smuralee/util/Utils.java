@@ -1,5 +1,6 @@
 package com.smuralee.util;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.smuralee.domain.Name;
 import com.smuralee.domain.User;
 import com.smuralee.entity.UserInfo;
@@ -7,6 +8,7 @@ import com.smuralee.entity.UserInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@XRayEnabled
 public class Utils {
 
     /**

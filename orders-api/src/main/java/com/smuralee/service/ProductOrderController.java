@@ -1,5 +1,6 @@
 package com.smuralee.service;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.smuralee.config.AppConfig;
 import com.smuralee.domain.Product;
 import com.smuralee.entity.ProductOrder;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@XRayEnabled
 @RestController
 @RequestMapping("/orders")
 public class ProductOrderController {

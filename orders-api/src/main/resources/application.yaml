@@ -1,14 +1,17 @@
 spring:
   application:
-    name: orders
+    name: orders-api
+
 server:
-  port: 0
+  port: 8080
+
 logging:
   level:
     root: ERROR
     org.springframework.web: ERROR
     com.smuralee: DEBUG
     org.hibernate: ERROR
+    com.amazonaws.xray: INFO
 
 app:
   features:

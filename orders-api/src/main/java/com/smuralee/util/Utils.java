@@ -1,5 +1,6 @@
 package com.smuralee.util;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.smuralee.domain.Product;
 import com.smuralee.entity.ProductOrder;
 import org.javamoney.moneta.Money;
@@ -7,6 +8,7 @@ import org.javamoney.moneta.Money;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@XRayEnabled
 public class Utils {
 
     /**
