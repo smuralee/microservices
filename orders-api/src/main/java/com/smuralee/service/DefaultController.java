@@ -21,7 +21,7 @@ public class DefaultController {
     public Map<String, String> getDefaultResponse(HttpServletRequest request) throws UnknownHostException {
         log.info("Default response for the root context");
         HashMap<String, String> map = new HashMap<>();
-        map.put("status", "Success");
+        map.put("Status", "Success");
         map.put("Remote address", request.getRemoteAddr());
         map.put("Host name", InetAddress.getLocalHost().getHostName());
         return map;
