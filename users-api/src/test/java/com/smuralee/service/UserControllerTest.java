@@ -31,20 +31,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserRepository repository;
-
-    @MockBean
-    private AppConfig appConfig;
-
-    @Spy
-    private List<User> userList;
-
     @Spy
     private final ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private UserRepository repository;
+    @MockBean
+    private AppConfig appConfig;
+    @Spy
+    private List<User> userList;
 
     @BeforeEach
     void setUp() {

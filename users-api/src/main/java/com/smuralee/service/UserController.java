@@ -1,7 +1,6 @@
 package com.smuralee.service;
 
 import com.smuralee.config.AppConfig;
-import com.smuralee.entity.Order;
 import com.smuralee.entity.User;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;

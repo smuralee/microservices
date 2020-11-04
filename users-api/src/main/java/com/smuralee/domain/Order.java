@@ -1,4 +1,4 @@
-package com.smuralee.entity;
+package com.smuralee.domain;
 
 import lombok.Value;
 import org.javamoney.moneta.Money;

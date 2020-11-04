@@ -1,9 +1,11 @@
 package com.smuralee.service;
 
 import com.smuralee.config.AppConfig;
+import com.smuralee.domain.Product;
 import com.smuralee.entity.ProductOrder;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.ProductOrderRepository;
+import com.smuralee.util.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +26,10 @@ public class ProductOrderController {
     }
 
     @GetMapping
-    public List<ProductOrder> getAll() {
+    public List<Product> getAll() {
         log.info("Getting all the product orders");
-        return this.repository.findAll();
+        final List<ProductOrder> orders = this.repository.findAll();
+        return Utils.getProducts(orders);
     }
 
     @GetMapping("/config")
@@ -36,33 +39,40 @@ public class ProductOrderController {
     }
 
     @GetMapping("/{id}")
-    public ProductOrder getById(final @PathVariable Long id) {
+    public Product getById(final @PathVariable Long id) {
         log.info("Getting the product orders by id");
         Optional<ProductOrder> productOrder = this.repository.findById(id);
-        return productOrder.orElseThrow(DataNotFoundException::new);
+        if (productOrder.isPresent()) {
+            return Utils.getProduct(productOrder.get());
+        } else {
+            throw new DataNotFoundException();
+        }
     }
 
     @GetMapping("/user/{id}")
-    public List<ProductOrder> getByUserId(final @PathVariable Long id) {
+    public List<Product> getByUserId(final @PathVariable Long id) {
         log.info("Getting the product orders by user id");
-        return this.repository.findByUserId(id);
+        final List<ProductOrder> orders = this.repository.findByUserId(id);
+        return Utils.getProducts(orders);
     }
 
     @PostMapping
-    public ProductOrder addProductOrder(final @RequestBody ProductOrder productOrder) {
+    public Product addProductOrder(final @RequestBody ProductOrder productOrder) {
         log.info("Saving the new product order");
-        return this.repository.save(productOrder);
+        final ProductOrder order = this.repository.save(productOrder);
+        return Utils.getProduct(order);
     }
 
     @PutMapping("/{id}")
-    public ProductOrder updateProductOrder(final @RequestBody ProductOrder productOrder, final @PathVariable Long id) {
+    public Product updateProductOrder(final @RequestBody ProductOrder productOrder, final @PathVariable Long id) {
         log.info("Fetching the product order by id");
         Optional<ProductOrder> fetchedProductOrder = this.repository.findById(id);
 
         log.info("Updating the product order identified by the id");
         if (fetchedProductOrder.isPresent()) {
             productOrder.setId(id);
-            return this.repository.save(productOrder);
+            final ProductOrder order = this.repository.save(productOrder);
+            return Utils.getProduct(order);
         } else {
             throw new DataNotFoundException();
         }
