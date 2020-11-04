@@ -1,44 +1,21 @@
 version: '3'
 services:
-  ping:
-    container_name: ping
-    build:
-      context: api/ping
-    image: smuralee/ping:latest
-    ports:
-      - 8080:8080
   users-api:
     container_name: users-api
     build:
-      context: api/users-api
+      context: users-api
     image: smuralee/users-api:latest
-    ports:
-      - 9003:8003
-    depends_on:
-      - todos-api
-      - orders-api
-    environment:
-      - SERVER_PORT=8003
-      - TODOS_HOSTNAME=todos-api
-      - TODOS_PORT=8002
-      - ORDERS_HOSTNAME=orders-api
-      - ORDERS_PORT=8001
-  todos-api:
-    container_name: todos-api
-    build:
-      context: api/todos-api
-    image: smuralee/todos-api:latest
-    ports:
-      - 9002:8002
-    environment:
-      - SERVER_PORT=8002
-  orders-api:
-    container_name: orders-api
-    build:
-      context: api/orders-api
-    image: smuralee/orders-api:latest
     ports:
       - 9001:8001
     environment:
       - SERVER_PORT=8001
+  orders-api:
+    container_name: orders-api
+    build:
+      context: orders-api
+    image: smuralee/orders-api:latest
+    ports:
+      - 9002:8002
+    environment:
+      - SERVER_PORT=8002
 

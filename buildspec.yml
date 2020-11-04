@@ -14,5 +14,4 @@ phases:
 artifacts:
   files:
     - orders-api/target/orders-api-1.0.jar
-    - todos-api/target/todos-api-1.0.jar
     - users-api/target/users-api-1.0.jar

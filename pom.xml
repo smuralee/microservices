@@ -9,9 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>api/orders-api</module>
-        <module>api/todos-api</module>
-        <module>api/users-api</module>
+        <module>orders-api</module>
+        <module>users-api</module>
     </modules>
 
 </project>
