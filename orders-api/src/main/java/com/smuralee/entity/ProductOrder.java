@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -22,9 +23,10 @@ public class ProductOrder implements Serializable {
 
     private Long userId;
 
-    private String description;
+    private String name;
 
-    private String cost;
+    private BigDecimal amount;
 
+    private String currencyCode;
 
 }

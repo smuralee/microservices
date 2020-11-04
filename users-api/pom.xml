@@ -21,6 +21,7 @@
         <mockito.version>3.5.0</mockito.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <aws-xray.version>2.7.0</aws-xray.version>
+        <java-money.version>1.4.2</java-money.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <version>${java-money.version}</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>

@@ -19,7 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,10 +53,10 @@ class ProductOrderControllerTest {
     void setUp() {
 
         productOrderList = Arrays.asList(
-                new ProductOrder(1L, 1L, "Carpet", "£12.00"),
-                new ProductOrder(2L, 1L, "Lamp", "£11.50"),
-                new ProductOrder(3L, 2L, "Pillow", "£1.50"),
-                new ProductOrder(4L, 3L, "Table", "£24.62")
+                new ProductOrder(1L, 1L, "Carpet", new BigDecimal("12.00"), "USD"),
+                new ProductOrder(2L, 1L, "Lamp", new BigDecimal("11.50"), "USD"),
+                new ProductOrder(3L, 2L, "Pillow", new BigDecimal("1.50"), "USD"),
+                new ProductOrder(4L, 3L, "Table", new BigDecimal("24.62"), "USD")
         );
 
         when(appConfig.isSecretManagement()).thenReturn(false);
@@ -139,14 +141,18 @@ class ProductOrderControllerTest {
 
         // Payload for the REST endpoint
         ProductOrder payload = new ProductOrder();
-        payload.setCost("£23.45");
-        payload.setDescription("Bicycle");
+        payload.setAmount(new BigDecimal("23.45"));
+        payload.setName("Bicycle");
+        payload.setUserId(1001L);
+        payload.setCurrencyCode("USD");
 
         // Response for the REST endpoint
         ProductOrder response = new ProductOrder();
         response.setId(1L);
-        response.setCost("£23.45");
-        response.setDescription("Bicycle");
+        response.setAmount(new BigDecimal("23.45"));
+        response.setName("Bicycle");
+        payload.setUserId(1001L);
+        payload.setCurrencyCode("USD");
 
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 
@@ -179,14 +185,18 @@ class ProductOrderControllerTest {
 
         // Payload for the REST endpoint
         ProductOrder payload = new ProductOrder();
-        payload.setCost("£20.45");
-        payload.setDescription("Bicycle Updated");
+        payload.setAmount(new BigDecimal("20.45"));
+        payload.setName("Bicycle Updated");
+        payload.setUserId(1001L);
+        payload.setCurrencyCode("USD");
 
         // Response for the REST endpoint
         ProductOrder response = new ProductOrder();
         response.setId(selectedId);
-        response.setCost("£20.45");
-        response.setDescription("Bicycle Updated");
+        response.setAmount(new BigDecimal("20.45"));
+        response.setName("Bicycle Updated");
+        response.setUserId(1001L);
+        response.setCurrencyCode("USD");
 
         when(repository.save(Mockito.any(ProductOrder.class))).thenReturn(response);
 

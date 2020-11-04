@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.smuralee.config.AppConfig;
+import com.smuralee.entity.Order;
 import com.smuralee.entity.User;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
@@ -49,16 +50,17 @@ public class UserController {
         return this.appConfig;
     }
 
-    @GetMapping("/orders")
-    public String getProductOrders() {
+    @GetMapping("/{id}/orders")
+    public String getProductOrdersByUserId(final @PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        final String endpoint = "http://orders";
-        log.info("Connecting to : " + endpoint);
+        StringBuilder endpoint = new StringBuilder("http://svc-orders:8001/orders/user/");
+        endpoint.append(id);
+        log.info("Connecting to : " + endpoint.toString());
 
-        return this.restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class).getBody();
+        return this.restTemplate.exchange(endpoint.toString(), HttpMethod.GET, entity, String.class).getBody();
     }
 
     @GetMapping("/{id}")
