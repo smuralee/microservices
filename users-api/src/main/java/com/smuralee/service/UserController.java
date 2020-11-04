@@ -1,19 +1,20 @@
 package com.smuralee.service;
 
 import com.smuralee.config.AppConfig;
-import com.smuralee.entity.User;
+import com.smuralee.domain.Order;
+import com.smuralee.domain.User;
+import com.smuralee.entity.UserInfo;
 import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
+import com.smuralee.util.Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,8 @@ public class UserController {
     @GetMapping
     public List<User> getAll() {
         log.info("Getting all the users");
-        return this.repository.findAll();
+        final List<UserInfo> userInfos = this.repository.findAll();
+        return Utils.getUsers(userInfos);
     }
 
     @GetMapping("/config")
@@ -50,40 +52,56 @@ public class UserController {
     }
 
     @GetMapping("/{id}/orders")
-    public String getProductOrdersByUserId(final @PathVariable Long id) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        StringBuilder endpoint = new StringBuilder("http://svc-orders:8001/orders/user/");
-        endpoint.append(id);
+    public User getUserWithOrders(final @PathVariable Long id) {
+        StringBuilder endpoint = new StringBuilder("http://svc-orders:8001/orders/user/").append(id);
         log.info("Connecting to : " + endpoint.toString());
 
-        return this.restTemplate.exchange(endpoint.toString(), HttpMethod.GET, entity, String.class).getBody();
+        ResponseEntity<List<Order>> rateResponse =
+                restTemplate.exchange(
+                        endpoint.toString(),
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<>() {
+                        });
+        List<Order> orders = rateResponse.getBody();
+        final Optional<UserInfo> userInfo = this.repository.findById(id);
+        if (userInfo.isPresent()) {
+            User user = Utils.getUser(userInfo.get());
+            user.setOrders(orders);
+            return user;
+        } else {
+            throw new DataNotFoundException();
+        }
     }
 
     @GetMapping("/{id}")
     public User getById(final @PathVariable Long id) {
         log.info("Getting the users by id");
-        Optional<User> user = this.repository.findById(id);
-        return user.orElseThrow(DataNotFoundException::new);
+        Optional<UserInfo> userInfo = this.repository.findById(id);
+        if (userInfo.isPresent()) {
+            return Utils.getUser(userInfo.get());
+        } else {
+            throw new DataNotFoundException();
+        }
     }
 
     @PostMapping
-    public User addUser(final @RequestBody User user) {
+    public User addUser(final @RequestBody UserInfo user) {
         log.info("Saving the new user");
-        return this.repository.save(user);
+        final UserInfo userInfo = this.repository.save(user);
+        return Utils.getUser(userInfo);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(final @RequestBody User user, final @PathVariable Long id) {
+    public User updateUser(final @RequestBody UserInfo userInfo, final @PathVariable Long id) {
         log.info("Fetching the user by id");
-        Optional<User> fetchedUser = this.repository.findById(id);
+        Optional<UserInfo> fetchedUser = this.repository.findById(id);
 
         log.info("Updating the user identified by the id");
         if (fetchedUser.isPresent()) {
-            user.setId(id);
-            return this.repository.save(user);
+            userInfo.setId(id);
+            final UserInfo userInfoSaved = this.repository.save(userInfo);
+            return Utils.getUser(userInfoSaved);
         } else {
             throw new DataNotFoundException();
         }

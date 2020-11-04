@@ -14,5 +14,10 @@ public class User implements Serializable {
 
     private Long id;
     private Name name;
+    private Integer age;
     private List<Order> orders;
+
+    public String getName() {
+        return this.name.toString();
+    }
 }

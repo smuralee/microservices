@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String fName;
+
+    private String mName;
+
+    private String lName;
 
     private Integer age;
 

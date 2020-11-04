@@ -4,7 +4,6 @@ import com.smuralee.domain.Product;
 import com.smuralee.entity.ProductOrder;
 import org.javamoney.moneta.Money;
 
-import javax.money.Monetary;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,15 +18,7 @@ public class Utils {
      * @return List<Product>
      */
     public static List<Product> getProducts(final List<ProductOrder> orders) {
-
-        return orders.stream().map(order -> {
-            Product product = new Product();
-            product.setId(order.getId());
-            product.setUserId(order.getUserId());
-            product.setName(order.getName());
-            product.setCost(Money.of(order.getAmount(), order.getCurrencyCode()));
-            return product;
-        }).collect(Collectors.toList());
+        return orders.stream().map(Utils::getProductObject).collect(Collectors.toList());
     }
 
     /**
@@ -39,11 +30,21 @@ public class Utils {
      * @return Product
      */
     public static Product getProduct(final ProductOrder order) {
+        return getProductObject(order);
+    }
+
+    /**
+     * Get Product domain object
+     *
+     * @param order
+     * @return Product
+     */
+    private static Product getProductObject(ProductOrder order) {
         Product product = new Product();
         product.setId(order.getId());
         product.setUserId(order.getUserId());
         product.setName(order.getName());
-        product.setCost(Money.of(order.getAmount(), Monetary.getCurrency(order.getCurrencyCode())));
+        product.setCost(Money.of(order.getAmount(), order.getCurrencyCode()));
         return product;
     }
 }
