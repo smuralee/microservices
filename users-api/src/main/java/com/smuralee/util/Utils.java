@@ -47,9 +47,9 @@ public class Utils {
         User user = new User();
         user.setId(userInfo.getId());
         Name name = new Name(
-                userInfo.getFName(),
-                userInfo.getMName(),
-                userInfo.getLName()
+                userInfo.getFirstName(),
+                userInfo.getMiddleName(),
+                userInfo.getLastName()
         );
         user.setName(name);
         user.setAge(userInfo.getAge());

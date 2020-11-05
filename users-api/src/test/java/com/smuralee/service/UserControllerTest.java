@@ -130,14 +130,14 @@ class UserControllerTest {
 
         // Payload for the REST endpoint
         UserInfo payload = new UserInfo();
-        payload.setFName("Jacob");
-        payload.setLName("Smith");
+        payload.setFirstName("Jacob");
+        payload.setLastName("Smith");
         payload.setAge(35);
 
         UserInfo entityResponse = new UserInfo();
         entityResponse.setId(1L);
-        entityResponse.setFName("Jacob");
-        entityResponse.setLName("Smith");
+        entityResponse.setFirstName("Jacob");
+        entityResponse.setLastName("Smith");
         entityResponse.setAge(35);
 
         // Response for the REST endpoint
@@ -176,14 +176,14 @@ class UserControllerTest {
 
         // Payload for the REST endpoint
         UserInfo payload = new UserInfo();
-        payload.setFName("Jacob");
-        payload.setLName("Smith");
+        payload.setFirstName("Jacob");
+        payload.setLastName("Smith");
         payload.setAge(35);
 
         UserInfo entityResponse = new UserInfo();
         entityResponse.setId(1L);
-        entityResponse.setFName("Jacob");
-        entityResponse.setLName("Smith");
+        entityResponse.setFirstName("Jacob");
+        entityResponse.setLastName("Smith");
         entityResponse.setAge(35);
 
         // Response for the REST endpoint

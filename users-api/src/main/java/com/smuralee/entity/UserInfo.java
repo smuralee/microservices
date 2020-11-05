@@ -3,6 +3,7 @@ package com.smuralee.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,12 +21,14 @@ public class UserInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fName;
+    @NonNull
+    private String firstName;
 
-    private String mName;
+    private String middleName;
 
-    private String lName;
+    private String lastName;
 
+    @NonNull
     private Integer age;
 
 }

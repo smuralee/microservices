@@ -88,9 +88,9 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(final @RequestBody UserInfo user) {
+    public User addUser(final @RequestBody UserInfo body) {
         log.info("Saving the new user");
-        final UserInfo userInfo = this.repository.save(user);
+        final UserInfo userInfo = this.repository.save(body);
         return Utils.getUser(userInfo);
     }
 

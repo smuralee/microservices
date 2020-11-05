@@ -3,6 +3,7 @@ package com.smuralee.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,12 +22,16 @@ public class ProductOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private Long userId;
 
+    @NonNull
     private String name;
 
+    @NonNull
     private BigDecimal amount;
 
+    @NonNull
     private String currencyCode;
 
 }
