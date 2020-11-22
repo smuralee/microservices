@@ -7,4 +7,6 @@ import java.util.List;
 public interface IOrderClient {
 
     List<Order> getOrdersByUserId(final Long id);
+
+    String getHostname();
 }
