@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.amazonaws.xray.spring.aop.XRayEnabled;
+import com.smuralee.client.IOrderClient;
 import com.smuralee.config.AppConfig;
 import com.smuralee.domain.Order;
 import com.smuralee.domain.User;
@@ -9,12 +10,8 @@ import com.smuralee.errors.DataNotFoundException;
 import com.smuralee.repository.UserRepository;
 import com.smuralee.util.Utils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,15 +24,15 @@ public class UserController {
 
     private final UserRepository repository;
 
-    private final RestTemplate restTemplate;
+    private final IOrderClient orderClient;
 
     private final Environment environment;
 
     private final AppConfig appConfig;
 
-    public UserController(UserRepository repository, RestTemplate restTemplate, Environment environment, AppConfig appConfig) {
+    public UserController(UserRepository repository, IOrderClient orderClient, Environment environment, AppConfig appConfig) {
         this.repository = repository;
-        this.restTemplate = restTemplate;
+        this.orderClient = orderClient;
         this.environment = environment;
         this.appConfig = appConfig;
     }
@@ -55,17 +52,7 @@ public class UserController {
 
     @GetMapping("/{id}/orders")
     public User getUserWithOrders(final @PathVariable Long id) {
-        StringBuilder endpoint = new StringBuilder("http://orders-api:8080/orders/user/").append(id);
-        log.info("Connecting to : " + endpoint.toString());
-
-        ResponseEntity<List<Order>> rateResponse =
-                restTemplate.exchange(
-                        endpoint.toString(),
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<>() {
-                        });
-        List<Order> orders = rateResponse.getBody();
+        List<Order> orders = this.orderClient.getOrdersByUserId(id);
         final Optional<UserInfo> userInfo = this.repository.findById(id);
         if (userInfo.isPresent()) {
             User user = Utils.getUser(userInfo.get());
