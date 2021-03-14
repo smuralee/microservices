@@ -14,7 +14,7 @@ phases:
       - mvn package
 artifacts:
   files:
-    - orders-api/target/orders-api-1.0.jar
-    - users-api/target/users-api-1.0.jar
-    - appspec.yml
+    - ./orders-api/target/orders-api-1.0.jar
+    - ./users-api/target/users-api-1.0.jar
+    - ./appspec.yml
   discard-paths: yes

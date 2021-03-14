@@ -9,6 +9,7 @@ import com.smuralee.errors.SecretsNotRetrievedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
@@ -35,6 +36,7 @@ public class SecretsClient {
         SecretsManagerClient client = null;
 
         client = SecretsManagerClient.builder()
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .build();
 
         // Creating the secret value for the secretId

@@ -28,7 +28,17 @@ public class RDSSecret {
                 ":" +
                 this.getPort() +
                 "/" +
-                this.getDbname();
+                this.getDBName();
+    }
+
+    private String getDBName() {
+        String value = null;
+        if (this.dbname != null) {
+            value = this.dbname;
+        } else if (this.dbInstanceIdentifier != null) {
+            value = this.dbInstanceIdentifier;
+        }
+        return value;
     }
 
 }
