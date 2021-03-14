@@ -1,0 +1,7 @@
+version: 0.0
+os: linux
+files:
+  - source: ./orders-api-1.0.jar
+    destination: /tmp
+  - source: ./users-api-1.0.jar
+    destination: /tmp
