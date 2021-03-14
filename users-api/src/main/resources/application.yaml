@@ -3,6 +3,8 @@ spring:
     name: users-api
   datasource:
     initialization-mode: always
+    tomcat:
+      jdbc-interceptors: com.amazonaws.xray.sql.postgres.TracingInterceptor
   jpa:
     hibernate:
       ddl-auto: update
@@ -10,6 +12,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
 
 server:
   port: 8080

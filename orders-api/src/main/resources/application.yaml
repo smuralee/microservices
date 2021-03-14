@@ -3,6 +3,8 @@ spring:
     name: orders-api
   datasource:
     initialization-mode: always
+    tomcat:
+      jdbc-interceptors: com.amazonaws.xray.sql.postgres.TracingInterceptor
   jpa:
     hibernate:
       ddl-auto: update
