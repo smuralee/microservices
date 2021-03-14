@@ -1,5 +1,6 @@
 package com.smuralee.service;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 
 @Slf4j
+@XRayEnabled
 @RestController
 @RequestMapping("/")
 public class DefaultController {

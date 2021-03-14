@@ -71,7 +71,6 @@ class UserControllerTest {
                 new User(3L, new Name("Raj", "J", "Koothrappali"), 36, null),
                 new User(4L, new Name("Steve", "H", "Smith"), 41, null)
         );
-        when(appConfig.isSecretManagement()).thenReturn(false);
 
     }
 

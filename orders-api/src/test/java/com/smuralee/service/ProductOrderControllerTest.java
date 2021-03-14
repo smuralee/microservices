@@ -65,8 +65,6 @@ class ProductOrderControllerTest {
                 new Product(4L, 3L, "Table", Money.of(new BigDecimal("24.62"), "USD"))
         );
 
-        when(appConfig.isSecretManagement()).thenReturn(false);
-
     }
 
     @Test

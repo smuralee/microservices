@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 @Data
 public class AppConfig {
 
-    private boolean secretManagement;
+    private String rdsSecret;
 }
