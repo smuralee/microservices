@@ -21,7 +21,6 @@
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
         <mockito.version>3.5.0</mockito.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <aws-xray.version>2.7.0</aws-xray.version>
         <java-money.version>1.4.2</java-money.version>
     </properties>
 
@@ -99,37 +98,30 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-core</artifactId>
-            <version>${aws-xray.version}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-apache-http</artifactId>
-            <version>${aws-xray.version}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-xray-recorder-sdk-aws-sdk-v2</artifactId>
-            <version>${aws-xray.version}</version>
+            <artifactId>aws-xray-recorder-sdk-aws-sdk</artifactId>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-xray-recorder-sdk-aws-sdk-v2-instrumentor</artifactId>
-            <version>${aws-xray.version}</version>
+            <artifactId>aws-xray-recorder-sdk-aws-sdk-instrumentor</artifactId>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-sql-postgres</artifactId>
-            <version>${aws-xray.version}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-sql-mysql</artifactId>
-            <version>${aws-xray.version}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-spring</artifactId>
-            <version>${aws-xray.version}</version>
         </dependency>
         <!-- AWS dependencies -->
         <dependency>
@@ -153,6 +145,13 @@
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>bom</artifactId>
                 <version>2.16.17</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-xray-recorder-sdk-bom</artifactId>
+                <version>2.4.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

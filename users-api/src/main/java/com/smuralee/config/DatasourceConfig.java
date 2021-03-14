@@ -2,6 +2,7 @@ package com.smuralee.config;
 
 
 import com.amazonaws.xray.AWSXRay;
+import com.amazonaws.xray.entities.Entity;
 import com.smuralee.config.model.RDSSecret;
 import com.smuralee.util.SecretsClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ public class DatasourceConfig {
 
     @Bean
     public DataSource getDataSource() {
-        AWSXRay.beginSegment("users-init");
+
+        Entity segment = AWSXRay.beginSegment("users-init");
+        AWSXRay.getGlobalRecorder().setTraceEntity(segment);
 
         RDSSecret secret = secretsClient.getSecret();
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
