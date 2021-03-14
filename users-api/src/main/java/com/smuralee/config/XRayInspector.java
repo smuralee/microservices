@@ -12,7 +12,7 @@ import java.util.Map;
 @Aspect
 @Component
 public class XRayInspector extends AbstractXRayInterceptor {
-    
+
     @Override
     protected Map<String, Map<String, Object>> generateMetadata(ProceedingJoinPoint proceedingJoinPoint, Subsegment subsegment) {
         return super.generateMetadata(proceedingJoinPoint, subsegment);

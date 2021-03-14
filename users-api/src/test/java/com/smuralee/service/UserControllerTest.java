@@ -1,6 +1,7 @@
 package com.smuralee.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smuralee.client.IOrderClient;
 import com.smuralee.config.AppConfig;
 import com.smuralee.domain.Name;
 import com.smuralee.domain.Order;
@@ -36,18 +37,21 @@ class UserControllerTest {
 
     @Spy
     private final ObjectMapper mapper = new ObjectMapper();
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    private UserRepository repository;
-    @MockBean
-    private AppConfig appConfig;
     @Spy
     private List<UserInfo> userInfoList;
     @Spy
     private List<User> userList;
     @Spy
     private List<Order> ordersList;
+
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private UserRepository repository;
+    @MockBean
+    private AppConfig appConfig;
+    @MockBean
+    private IOrderClient orderClient;
 
     @BeforeEach
     void setUp() {
