@@ -13,16 +13,16 @@ phases:
     commands:
       - echo Logging into DockerHub...
       - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
-      - echo Logging into Amazon ECR...
   build:
     commands:
       - echo Build started on `date`
       - mvn test
       - mvn package
       - echo Build completed on `date`
+      - chmod 777 build-images.sh
+      - ./build-images.sh
   post_build:
     commands:
-      - ./build-images.sh
       - docker images
 artifacts:
   files:

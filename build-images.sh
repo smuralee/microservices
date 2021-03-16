@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo Build Docker images...
 declare -a mvn_projects=("orders-api" "users-api")
 for mvn_project in "${mvn_projects[@]}"
 do
