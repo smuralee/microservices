@@ -19,7 +19,7 @@ phases:
       - mvn test
       - mvn package
       - echo Build completed on `date`
-      - chmod 777 build-images.sh
+      - chmod 755 build-images.sh
       - ./build-images.sh
   post_build:
     commands:
