@@ -19,6 +19,7 @@ do
   sed -i 's@IMAGE_TAG@'$IMAGE_TAG'@g' taskdef.json
   sed -i 's@AWS_REGION@'$AWS_REGION'@g' taskdef.json
   sed -i 's@TASK_EXECUTION_ARN@'$TASK_EXECUTION_ARN'@g' taskdef.json
-  echo Completed task definition update on `date`
+  aws ecs register-task-definition --cli-input-json file://taskdef.json
+  echo Completed task definition update and registration on `date`
   cd ..
 done
