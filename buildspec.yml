@@ -11,7 +11,7 @@ phases:
       java: corretto11
   pre_build:
     commands:
-      - yum install -y jq
+      - apt install -y jq
       - echo Logging into DockerHub...
       - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
   build:
