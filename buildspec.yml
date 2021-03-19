@@ -27,8 +27,8 @@ phases:
   post_build:
     commands:
       - docker images
-      - cat appspec.yml
+      - cat appspec.yaml
 artifacts:
   files:
-    - ./appspec.yml
+    - ./appspec.yaml
   discard-paths: yes
