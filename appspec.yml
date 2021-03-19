@@ -1,7 +1,16 @@
 version: 0.0
-os: linux
-files:
-  - source: ./orders-api-1.0.jar
-    destination: /tmp
-  - source: ./users-api-1.0.jar
-    destination: /tmp
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:AWS_REGION:ACCOUNT_ID:task-definition/orders:orders_version"
+        LoadBalancerInfo:
+          ContainerName: "orders"
+          ContainerPort: 8080
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:AWS_REGION:ACCOUNT_ID:task-definition/users:users_version"
+        LoadBalancerInfo:
+          ContainerName: "users"
+          ContainerPort: 8080

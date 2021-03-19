@@ -11,6 +11,7 @@ phases:
       java: corretto11
   pre_build:
     commands:
+      - yum install -y jq
       - echo Logging into DockerHub...
       - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
   build:
@@ -21,12 +22,13 @@ phases:
       - echo Build completed on `date`
       - chmod 755 build-images.sh
       - ./build-images.sh
+      - chmod 755 prepare-appspec.sh
+      - ./prepare-appspec.sh
   post_build:
     commands:
       - docker images
+      - cat appspec.yml
 artifacts:
   files:
-    - ./orders-api/target/orders-api-1.0.jar
-    - ./users-api/target/users-api-1.0.jar
     - ./appspec.yml
   discard-paths: yes

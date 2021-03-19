@@ -1,8 +1,27 @@
 {
   "containerDefinitions": [
     {
+      "name": "xray-daemon",
+      "image": "amazon/aws-xray-daemon",
+      "cpu": 32,
+      "memoryReservation": 256,
+      "portMappings" : [
+        {
+          "hostPort": 0,
+          "containerPort": 2000,
+          "protocol": "udp"
+        }
+      ]
+    },
+    {
       "name": "orders",
       "image": "REPOSITORY_URI:IMAGE_TAG",
+      "environment": [
+        {
+          "name": "AWS_XRAY_DAEMON_ADDRESS",
+          "value": "xray-daemon:2000"
+        }
+      ],
       "portMappings": [
         {
           "containerPort": 8080,
