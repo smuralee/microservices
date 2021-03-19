@@ -10,17 +10,19 @@
           "containerPort": 2000,
           "protocol": "udp"
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/orders",
+          "awslogs-region": "AWS_REGION",
+          "awslogs-stream-prefix": "orders"
+        }
+      }
     },
     {
       "name": "orders",
       "image": "REPOSITORY_URI:IMAGE_TAG",
-      "environment": [
-        {
-          "name": "AWS_XRAY_DAEMON_ADDRESS",
-          "value": "xray-daemon:2000"
-        }
-      ],
       "portMappings": [
         {
           "containerPort": 8080,
@@ -48,6 +50,6 @@
   "requiresCompatibilities": [
     "FARGATE"
   ],
-  "cpu": "256",
-  "memory": "1024"
+  "cpu": "512",
+  "memory": "2048"
 }
