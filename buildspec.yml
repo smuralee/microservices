@@ -20,15 +20,18 @@ phases:
       - mvn test
       - mvn package
       - echo Build completed on `date`
-      - chmod 755 build-images.sh
-      - ./build-images.sh
-      - chmod 755 prepare-appspec.sh
-      - ./prepare-appspec.sh
+      - chmod 755 images.sh
+      - ./images.sh
   post_build:
     commands:
       - docker images
-      - cat appspec.yaml
+      - cat orders-appspec.yaml
+      - cat users-appspec.yaml
+      - cat orders-api-taskdef.json
+      - cat users-api-taskdef.json
 artifacts:
   files:
-    - ./appspec.yaml
-  discard-paths: yes
+    - orders-api-appspec.yaml
+    - users-api-appspec.yaml
+    - orders-api-taskdef.json
+    - users-api-taskdef.json
