@@ -5,7 +5,7 @@
       "image": "amazon/aws-xray-daemon",
       "cpu": 32,
       "memoryReservation": 256,
-      "portMappings" : [
+      "portMappings": [
         {
           "containerPort": 2000,
           "protocol": "udp"
@@ -33,6 +33,12 @@
       "dockerLabels": {
         "name": "orders"
       },
+      "environment": [
+        {
+          "name": "CODEGURU_ROLE",
+          "value": "CODEGURU_ROLE_ARN"
+        }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

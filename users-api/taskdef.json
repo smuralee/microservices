@@ -27,6 +27,10 @@
         {
           "name": "ORDERS_HOST",
           "value": "orders.local:8080"
+        },
+        {
+          "name": "CODEGURU_ROLE",
+          "value": "CODEGURU_ROLE_ARN"
         }
       ],
       "portMappings": [

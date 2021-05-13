@@ -19,6 +19,7 @@ do
   sed -i 's@IMAGE_TAG@'$IMAGE_TAG'@g' taskdef.json
   sed -i 's@AWS_REGION@'$AWS_REGION'@g' taskdef.json
   sed -i 's@TASK_EXECUTION_ARN@'$TASK_EXECUTION_ARN'@g' taskdef.json
+  sed -i 's@CODEGURU_ROLE_ARN@'$CODEGURU_ROLE_ARN'@g' taskdef.json
   mv taskdef.json ../${mvn_project}-taskdef.json
   mv appspec.yaml ../${mvn_project}-appspec.yaml
   echo Completed task definition and app spec updates on `date`
