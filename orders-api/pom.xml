@@ -15,6 +15,14 @@
     <name>orders-api</name>
     <description>Demo REST service for experiments</description>
 
+    <repositories>
+        <repository>
+            <id>codeguru-profiler</id>
+            <name>codeguru-profiler</name>
+            <url>https://d1osg35nybn3tt.cloudfront.net</url>
+        </repository>
+    </repositories>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -148,9 +156,9 @@
             <artifactId>iam</artifactId>
         </dependency>
         <dependency>
-            <groupId>software.amazon.codeguruprofiler</groupId>
-            <artifactId>codeguru-profiler-java-agent-standalone</artifactId>
-            <version>1.1.2</version>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>codeguru-profiler-java-agent</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 

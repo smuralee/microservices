@@ -1,35 +1,22 @@
 package com.smuralee;
 
-import codegurushadow.software.amazon.codeguruprofilerjavaagent.Profiler;
-import com.smuralee.util.CodeGuruCredentials;
+import com.smuralee.util.CrossAccountClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
-
-import javax.annotation.PostConstruct;
+import software.amazon.codeguruprofilerjavaagent.Profiler;
 
 @SpringBootApplication
 public class ProductOrdersApiApplication {
 
-    private final Environment environment;
-
-    public ProductOrdersApiApplication(Environment environment) {
-        this.environment = environment;
-    }
-
     public static void main(String[] args) {
+        final String roleArn = System.getProperty("CODEGURU_ROLE");
+        Profiler.builder()
+                .profilingGroupName("microservices")
+                .awsCredentialsProvider(CrossAccountClient.getCredentials(roleArn, "orders-profiling"))
+                .withHeapSummary(true)
+                .build()
+                .start();
         SpringApplication.run(ProductOrdersApiApplication.class, args);
     }
-
-    @PostConstruct
-    public void init() {
-        final String codeguruRoleArn = this.environment.getProperty("CODEGURU_ROLE");
-        new Profiler.Builder()
-                .profilingGroupName("microservices")
-                .awsCredentialsProvider(() -> new CodeGuruCredentials(codeguruRoleArn, "orders-profiling"))
-                .withHeapSummary(true)
-                .build().start();
-    }
-
 
 }
