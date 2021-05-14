@@ -10,9 +10,8 @@ do
   COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   IMAGE_TAG=${COMMIT_HASH:=latest}
   aws ecr get-login-password | docker login --username AWS --password-stdin $REPOSITORY_URI
-  docker build -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG .
+  docker build -t $REPOSITORY_URI:$IMAGE_TAG .
   echo Completed container image built and tagging on `date`
-  docker push $REPOSITORY_URI:latest
   docker push $REPOSITORY_URI:$IMAGE_TAG
   echo Completed container image push on `date`
   sed -i 's@REPOSITORY_URI@'$REPOSITORY_URI'@g' taskdef.json
