@@ -30,5 +30,7 @@
     - Supported operations: **GET**
     - Returns the user data with the orders information for the `{id}`
 
+**Note:** Needs a [x-ray daemon](https://hub.docker.com/r/amazon/aws-xray-daemon) sidecar for distributed tracing
+
 # Docker configuration
 * [Docker compose](./docker-compose.yml)
